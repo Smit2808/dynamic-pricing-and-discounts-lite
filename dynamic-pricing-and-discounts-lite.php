@@ -37,46 +37,19 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'DYNAMIC_PRICING_AND_DISCOUNTS_LITE_VERSION', '1.0.0' );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-dynamic-pricing-and-discounts-lite-activator.php
- */
-function activate_dynamic_pricing_and_discounts_lite() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dynamic-pricing-and-discounts-lite-activator.php';
-	Dynamic_Pricing_And_Discounts_Lite_Activator::activate();
+if ( ! defined( 'DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH' ) ) {
+	define( 'DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH', plugin_dir_path( __FILE__ ) );
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-dynamic-pricing-and-discounts-lite-deactivator.php
- */
-function deactivate_dynamic_pricing_and_discounts_lite() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dynamic-pricing-and-discounts-lite-deactivator.php';
-	Dynamic_Pricing_And_Discounts_Lite_Deactivator::deactivate();
-}
+// Check if WooCommerce is active
+add_action( 'plugins_loaded', function() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		add_action( 'admin_notices', function() {
+			echo '<div class="error"><p>' . esc_html__( 'Dynamic Pricing & Discounts Lite requires WooCommerce to be installed and active.', 'dynamic-pricing-and-discounts-lite' ) . '</p></div>';
+		} );
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+	}
+} );
 
-register_activation_hook( __FILE__, 'activate_dynamic_pricing_and_discounts_lite' );
-register_deactivation_hook( __FILE__, 'deactivate_dynamic_pricing_and_discounts_lite' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-dynamic-pricing-and-discounts-lite.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_dynamic_pricing_and_discounts_lite() {
-
-	$plugin = new Dynamic_Pricing_And_Discounts_Lite();
-	$plugin->run();
-
-}
-run_dynamic_pricing_and_discounts_lite();
+require_once DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH . 'includes/dynamic-pricing-and-discounts-lite-action-functions.php';
