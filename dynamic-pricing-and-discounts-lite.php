@@ -41,6 +41,8 @@ if ( ! defined( 'DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH' ) ) {
 	define( 'DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH', plugin_dir_path( __FILE__ ) );
 }
 
+define( 'DYNAMIC_PRICING_AND_DISCOUNTS_LITE_URL', plugin_dir_url( DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH ) );
+
 // Check if WooCommerce is active
 add_action( 'plugins_loaded', function() {
 	if ( ! class_exists( 'WooCommerce' ) ) {
@@ -53,3 +55,7 @@ add_action( 'plugins_loaded', function() {
 } );
 
 require_once DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH . 'includes/dynamic-pricing-and-discounts-lite-action-functions.php';
+
+require_once DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH . 'includes/dynamic-pricing-and-discounts-lite-dicount-functions.php';
+
+require_once DYNAMIC_PRICING_AND_DISCOUNTS_LITE_PATH . 'templates/dynamic-pricing-and-discounts-lite-template.php';
