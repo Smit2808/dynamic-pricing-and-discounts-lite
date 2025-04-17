@@ -28,6 +28,7 @@ add_action( 'admin_enqueue_scripts', 'dynamic_pricing_and_discounts_lite_enqueue
  * Enqueue admin styles.
  */
 function dynamic_pricing_and_discounts_lite_enqueue_script() {
+	wp_enqueue_style( 'dynamic-pricing-and-discounts-lite-style', DYNAMIC_PRICING_AND_DISCOUNTS_LITE_URL . 'dynamic-pricing-and-discounts-lite/assets/styles.css', array(), '1.0.0' );
 	wp_enqueue_script( 'dynamic-pricing-and-discounts-lite-script', DYNAMIC_PRICING_AND_DISCOUNTS_LITE_URL . 'dynamic-pricing-and-discounts-lite/assets/scripts.js', array( 'jquery' ), '1.0.0', true );
 
 	wp_localize_script(

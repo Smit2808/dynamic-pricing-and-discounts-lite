@@ -21,43 +21,57 @@ function dynamic_pricing_and_discounts_lite_settings_page() {
 	$saved_settings = get_option('dynamic_pricing_and_discounts_lite_settings', array());
 	?>
 	<div class="wrap">
-		<h2>Dynamic Pricing and Discounts Lite Settings</h2>
-		<form method="post" action="">
-			<?php
-			settings_fields('dynamic-pricing-and-discounts-lite-settings');
-			do_settings_sections('dynamic-pricing-and-discounts-lite-settings');
-			?>
-			<div id="dynamic-fields-container" style="display: none; margin-top: 20px;">
+		<div id="overlay" style="display: none;"></div>
+		<div id="dynamic-fields-container" style="display: none;">
+			<div class="close-popup-section">
+				<span id="close-icon" class="dashicons dashicons-no"></span>
+			</div>
+			<form method="post" action="">
+				<?php
+				settings_fields('dynamic-pricing-and-discounts-lite-settings');
+				do_settings_sections('dynamic-pricing-and-discounts-lite-settings');
+				?>
 				<h3>Add New Discount Rule</h3>
 
-				<label for="rule_name">Rule Name:</label>
-				<input type="text" id="rule_name" name="rule_name" placeholder="Enter Rule Name"/>
+				<div class="field-wrapper rule-name-wrapper">
+					<label for="rule_name">Rule Name:</label>
+					<input type="text" id="rule_name" name="rule_name" placeholder="Enter Rule Name"/>
+				</div>
 
-				<label for="discount_label">Discount Label:</label>
-				<input type="text" id="discount_label" name="discount_label" placeholder="Enter Discount Label" />
+				<div class="field-wrapper discount-label-wrapper">
+					<label for="discount_label">Discount Label:</label>
+					<input type="text" id="discount_label" name="discount_label" placeholder="Enter Discount Label" />
+				</div>
 
-				<label for="discount_priority">Discount Priority:</label>
-				<input type="text" id="discount_priority" name="discount_priority" placeholder="Enter Discount Priority" />
+				<div class="field-wrapper discount-priority-wrapper">
+					<label for="discount_priority">Discount Priority:</label>
+					<input type="text" id="discount_priority" name="discount_priority" placeholder="Enter Discount Priority" />
+				</div>
 
-				<label for="discount_type">Discount Type:</label>
-				<select id="discount_type" name="discount_type">
-					<option value="percentage-discount">Percentage Discount</option>
-					<option value="product-price-discount">Product Price Discount</option>
-					<option value="fixed-price-discount">Fixed Price Discount</option>
-					<option value="discount-on-cart-total">Discount Based on Cart Total</option>
-					<option value="discount-on-product-quantity">Discount Based on Product Quantity</option>
-				</select>
+				<div class="field-wrapper discount-type-wrapper">
+					<label for="discount_type">Discount Type:</label>
+					<select id="discount_type" name="discount_type">
+						<option value="percentage-discount">Percentage Discount</option>
+						<option value="product-price-discount">Product Price Discount</option>
+						<option value="fixed-price-discount">Fixed Price Discount</option>
+						<option value="discount-on-cart-total">Discount Based on Cart Total</option>
+						<option value="discount-on-product-quantity">Discount Based on Product Quantity</option>
+					</select>
+				</div>
 
-				<label for="discount_value">Discount Value in Percentage/Price:</label>
-				<input type="text" id="discount_value" name="discount_value" placeholder="Enter Discount Value" />
-			</div>
+				<div class="field-wrapper discount-value-wrapper">
+					<label for="discount_value">Discount Value in Percentage/Price:</label>
+					<input type="text" id="discount_value" name="discount_value" placeholder="Enter Discount Value" />	
+				</div>
 
+				<input type="hidden" name="dynamic_pricing_and_discounts_lite_settings" value="1" />
+				<button type="button" id="save-button" class="button button-primary">Save Settings</button>
+			</form>
+		</div>
+		<div class="discount-rule-save-table-header">
+			<h2>Discount Rules</h2>
 			<button type="button" id="add-new-item-button" class="button button-primary">Add New Item</button>
-			<input type="hidden" name="dynamic_pricing_and_discounts_lite_settings" value="1" />
-			<button type="button" id="save-button" class="button button-primary">Save Settings</button>
-		</form>
-
-		<h3>Saved Discount Rules</h3>
+		</div>
 		<table class="wp-list-table widefat fixed striped">
 			<thead>
 				<tr>

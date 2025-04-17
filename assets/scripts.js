@@ -7,6 +7,7 @@ document.getElementById('add-new-item-button').addEventListener('click', functio
     document.getElementById('discount_type').value = '';
     document.getElementById('discount_value').value = '';
     document.getElementById('dynamic-fields-container').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
 });
 
 // Function to save the settings.
@@ -45,7 +46,10 @@ document.getElementById('save-button').addEventListener('click', function () {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            console.log(data.success);
+            if (data.success) {
+                location.reload();
+            } 
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -56,49 +60,6 @@ document.getElementById('save-button').addEventListener('click', function () {
 document.querySelectorAll('.discount-item-row').forEach(function (row) {
     row.addEventListener('click', function () {
         const index = this.getAttribute('data-index');
-
-
-        // Start ---- Commented out AJAX call
-
-        // Make an AJAX call to fetch the details of the selected item
-        // fetch(siteConfig.ajaxUrl + `?action=get_discount_item_details&index=${index}`)
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             throw new Error('Network response is not ok');
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         // Populate the form fields with the fetched item's details
-        //         document.getElementById('rule_name').value = data.rule_name;
-        //         document.getElementById('discount_label').value = data.discount_label;
-        //         document.getElementById('discount_priority').value = data.discount_priority;
-        //         document.getElementById('discount_type').value = data.discount_type;
-        //         document.getElementById('discount_value').value = data.discount_value;
-
-        //         // Show the form for editing
-        //         document.getElementById('dynamic-fields-container').style.display = 'block';
-
-        //         console.log(data.rule_name, data.discount_label, data.discount_priority, data.discount_type, data.discount_value);
-
-        //         // Optionally, track the index of the item being edited
-        //         let editIndexField = document.getElementById('edit_index');
-        //         if (!editIndexField) {
-        //             editIndexField = document.createElement('input');
-        //             editIndexField.type = 'hidden';
-        //             editIndexField.id = 'edit_index';
-        //             editIndexField.name = 'edit_index';
-        //             document.querySelector('form').appendChild(editIndexField);
-        //         }
-        //         editIndexField.value = index;
-        //     })
-        //     .catch(error => {
-        //         console.error('There was a problem with the fetch operation:', error);
-        //     });
-
-        // End ---- Commented out AJAX call
-
-
 
         // Populate the form fields with the selected item's details
         const ruleName = this.querySelector('.discount-rule-name-cell').textContent.trim();
@@ -115,6 +76,7 @@ document.querySelectorAll('.discount-item-row').forEach(function (row) {
 
         // Show the form for editing
         document.getElementById('dynamic-fields-container').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
 
         // Optionally, you can add a hidden field to track the index of the item being edited
         let editIndexField = document.getElementById('edit_index');
@@ -127,4 +89,8 @@ document.querySelectorAll('.discount-item-row').forEach(function (row) {
         }
         editIndexField.value = index;
     });
+});
+
+document.getElementById('close-icon').addEventListener('click', function () {
+    location.reload();
 });
